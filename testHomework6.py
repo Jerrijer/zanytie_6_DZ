@@ -1,6 +1,7 @@
 import inspect
 
 from datetime import time
+from idlelib import browser
 
 
 def test_dark_theme_by_time():
@@ -26,8 +27,8 @@ def test_dark_theme_by_time_and_user_choice():
     dark_theme_enabled_by_user = None - Пользователь не сделал выбор (используется переключение по времени системы)
     """
 
-    current_time = time(hour=16)
-    dark_theme_enabled_by_user = True
+    current_time = time(hour=23)
+    dark_theme_enabled_by_user = None
 
 
     if current_time.hour < 7 or current_time.hour > 22:
@@ -39,7 +40,7 @@ def test_dark_theme_by_time_and_user_choice():
         is_dark_theme = True
     else:
         is_dark_theme = False
-    assert is_dark_theme is True
+    assert is_dark_theme is None
 
 
 def test_find_suitable_user():
@@ -100,17 +101,16 @@ def print_a_name(input1, input2):
 
 
 def open_browser(browser_name):
-    actual_result = print_a_name(open_browser.__name__, *inspect.getfullargspec(open_browser)[0])
+    actual_result = print_a_name(open_browser, browser.name)
     assert actual_result == "Open Browser [Chrome]"
 
 
 def go_to_companyname_homepage(page_url):
-    actual_result = print_a_name(go_to_companyname_homepage.__name__,
-    *inspect.getfullargspec(go_to_companyname_homepage)[0])
+    actual_result = print_a_name(go_to_companyname_homepage, page_url)
     assert actual_result == "Go To Companyname Homepage [https://companyname.com]"
 
 
 def find_registration_button_on_login_page(page_url, button_text):
-    actual_result = print_a_name(find_registration_button_on_login_page.__name__,
-    *inspect.getfullargspec(find_registration_button_on_login_page)[0])
+    actual_result = print_a_name(find_registration_button_on_login_page, page_url, button_text)
+
     assert actual_result == "Find Registration Button On Login Page [https://companyname.com/login, Register]"
